@@ -1,57 +1,57 @@
 using System;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
-using UnityEngine.Rendering;
+using Progress = UnityEditor.Progress;
 
-public class ActionGauge
+namespace Artheia
 {
-    private const int _baseSpeed = 120;
-    private const int _baseIncrement = 10;
-
-    public ActionGauge(int speed)
+    public /*abstract*/ class CombatEntity
     {
-        Gauge = _CalculateInitialGauge(speed);
-    }
-    
-    private int _CalculateInitialGauge(int speed)
-    {
-        double speedRatio = (double)speed / _baseSpeed;
-        int initialGauge = (int)(speedRatio * 50);
-        return Math.Clamp(initialGauge, 0, 100);
-    }
+        private const float _maxActionGauge = 100f;
 
-    // Operator overloading
-    public static ActionGauge operator +(ActionGauge gauge, int speed)
-    {
-        float speedRatio = (float)speed / _baseSpeed;
-
-        int increment = (int)(speedRatio * _baseIncrement);
-        gauge.Gauge += increment;
+        public string Id;
+        public int Priority;
+        public int Speed;
+        public ActionGauge ActionGauge;
         
-        return gauge;
+        private bool _isMyTurn;
+
+        public CombatEntity(string id, int priority, int speed)
+        {
+            Id = id;
+            Priority = priority;
+            Speed = speed;
+            ActionGauge = new(Speed);
+        }
+
+        public void StartTurn()
+        {
+            _isMyTurn = true;
+        }
+
+        public void TakeTurn()
+        {
+            if (_isMyTurn)
+                EndTurn();
+            else
+                PassTurn();
+        }
+
+        public void EndTurn()
+        {
+            ActionGauge = Speed;
+            _isMyTurn = false;
+        }
+
+        public void PassTurn()
+        {
+            ActionGauge++;
+        }
+
+        public async UniTask ProcessTurn()
+        {
+            
+        }
     }
-    
-    public static implicit operator ActionGauge(int speed)
-    {
-        return new ActionGauge(speed);
-    }
-    
-    public int Gauge { get; private set; }
 }
-
-public /*abstract*/ class CombatEntity
-{
-    public int Speed;
-    public ActionGauge ActionGauge;
-
-    public CombatEntity(int speed)
-    {
-        Speed = speed;
-        ActionGauge = new(Speed);
-        
-        Debug.Log($"Create : {Speed}, {ActionGauge.Gauge}");
-    }
-    
-    // public abstract UniTask TakeTurn();
-}
-

@@ -2,17 +2,17 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class GameManager : Singleton<GameManager>
+namespace Artheia
 {
-    private readonly ResourceManager _resource = new();
-
-    private void Start()
+    public class GameManager : Singleton<GameManager>
     {
-        for (int i = 0; i < 5; i++)
+        private readonly ResourceManager _resource = new();
+    
+        private void Start()
         {
-            CombatEntity ce = new((int)Random.Range(80,150));
+            TurnManager.Instance.Initialize();
         }
-    }
 
-    public static ResourceManager Resource => Instance._resource;
+        public static ResourceManager Resource => Instance._resource;
+    }
 }
