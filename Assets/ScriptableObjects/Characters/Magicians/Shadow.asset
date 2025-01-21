@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6560bfaf2f9ccf4a980342e8a8d89e8, type: 3}
+  m_Name: Shadow
+  m_EditorClassIdentifier: 
+  _id: 
+  _priority: 0
+  _speed: 0
+  _portrait: {fileID: 21300000, guid: 112c48ad71ab8dc41a8d8b8a42b768d1, type: 3}
+  _model: {fileID: 0}

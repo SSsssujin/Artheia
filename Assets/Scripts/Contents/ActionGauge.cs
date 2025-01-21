@@ -6,20 +6,20 @@ namespace Artheia
     {
         private const int _baseSpeed = 100;
         private const int _baseIncrement = 10;
-        private const int _baseGaugeRatio = 50;
+        private const int _baseGaugeRatio = 4;
 
         private static float _speedRatio;
-        private int _gauge;
+        private float _gauge;
 
         public ActionGauge(int speed)
         {
             Gauge = _CalculateInitialGauge(speed);
         }
 
-        private int _CalculateInitialGauge(int speed)
+        private float _CalculateInitialGauge(int speed)
         {
             _speedRatio = _UpdateSpeedRatio(speed);
-            int initialGauge = (int)(_speedRatio * _baseGaugeRatio);
+            float initialGauge = _speedRatio * _baseGaugeRatio * 0.1f;
             return initialGauge;
         }
 
@@ -31,7 +31,7 @@ namespace Artheia
         // Operator overloading
         public static ActionGauge operator ++(ActionGauge gauge)
         {
-            int increment = (int)(_speedRatio * _baseIncrement);
+            float increment = _speedRatio * _baseIncrement;
             gauge.Gauge += increment;
             return gauge;
         }
@@ -61,13 +61,13 @@ namespace Artheia
             return new ActionGauge(speed);
         }
 
-        public int Gauge
+        public float Gauge
         {
             get => _gauge;
             private set
             {
-                if (value > 100) 
-                    _gauge = 100;
+                if (value > 1) 
+                    _gauge = 1;
                 else
                     _gauge = value;
             }

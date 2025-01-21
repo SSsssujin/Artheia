@@ -1,9 +1,8 @@
 using System;
 
-public class EnemyUnit : UnitBase
+namespace Artheia.CombatUnit
 {
-    public override void TakeTurn()
+    public class EnemyUnit : CombatUnitBase
     {
-        
     }
 }
